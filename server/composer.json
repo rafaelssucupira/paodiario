@@ -1,0 +1,15 @@
+{
+    "name": "bible/server",
+    "autoload": {
+        "psr-4": {
+            "Bible\\Server\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "rafaelssucupira",
+            "email": "rafaelssucupira@gmail.com"
+        }
+    ],
+    "require": {}
+}

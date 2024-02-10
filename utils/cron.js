@@ -2,7 +2,7 @@ import { CronJob } from "cron";
 import { DailyBread } from "daily-bread"
 import { client } from "./client.js";
 import contactsWhatsapp from "./contacts.js";
-
+import { postData } from "./postData.js";
 
 
 export class Cron
@@ -13,12 +13,21 @@ export class Cron
 	async getMessage()
 		{
 
-			const bible = new DailyBread();
-			bible.setVersion( "NVI-PT" );
 
-			const passage = await bible.votd()
-			console.log(passage);
-			this.#message = passage
+			try {
+				const bible = new DailyBread();
+				bible.setVersion( "NVI-PT" );
+
+				const { reference, text } = await bible.votd()
+				this.#message = text
+
+				//PASSANDO PARA O BACNO DE DADOS
+				await postData( { reference, text }  );
+			}
+			catch($err) {
+				console.log($err);
+			}
+
 
 
 		}
@@ -66,7 +75,7 @@ export class Cron
 						await client.sendMessage( number._serialized, message  )
 					}
 					catch(err) {
-						console.log("erro para : " + number, err)
+						console.log("erro para " + to + " : ", err)
 					}
 
 				}
