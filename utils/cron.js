@@ -19,7 +19,7 @@ export class Cron
 				bible.setVersion( "NVI-PT" );
 
 				const { reference, text } = await bible.votd()
-				this.#message = text
+				this.#message = { reference, text }
 
 				//PASSANDO PARA O BACNO DE DADOS
 				await postData( { reference, text }  );
@@ -37,8 +37,8 @@ export class Cron
 
 			const currentClass = this;
 
-			const cron = new CronJob( "0 30 5 * * *" ,	async function()
-				{
+			// const cron = new CronJob( "0 30 5 * * *" ,	async function()
+				// {
 					await currentClass.getMessage(); //CAPTURAR MENSAGEM DO DIA
 					for(const data of contactsWhatsapp)
 						{
@@ -47,7 +47,7 @@ export class Cron
 						}
 
 
-				}, null, true, "America/Sao_Paulo")
+				// }, null, true, "America/Sao_Paulo")
 
 
 		}
@@ -72,6 +72,7 @@ export class Cron
 			if(message != undefined || message != null)
 				{
 					try {
+						// console.log(message);
 						await client.sendMessage( number._serialized, message  )
 					}
 					catch(err) {
