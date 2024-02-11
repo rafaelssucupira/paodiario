@@ -4,6 +4,9 @@ import { client } from "./client.js";
 import contactsWhatsapp from "./contacts.js";
 import { postData } from "./postData.js";
 
+import 'dotenv/config'
+
+
 
 export class Cron
 {
@@ -37,8 +40,8 @@ export class Cron
 
 			const currentClass = this;
 
-			// const cron = new CronJob( "0 30 5 * * *" ,	async function()
-				// {
+			const cron = new CronJob( "0 30 5 * * *" ,	async function()
+				{
 					await currentClass.getMessage(); //CAPTURAR MENSAGEM DO DIA
 					for(const data of contactsWhatsapp)
 						{
@@ -46,8 +49,8 @@ export class Cron
 
 						}
 
-
-				// }, null, true, "America/Sao_Paulo")
+					currentClass.sendReportLastMessage()
+				}, null, true, "America/Sao_Paulo")
 
 
 		}
@@ -61,19 +64,75 @@ export class Cron
 
 		}
 
+	async sendReportLastMessage()
+		{
+			let text = "";
+			for(const data of contactsWhatsapp)
+				{
+					try {
+						const timestamp = await this.getTime(data.phone);
+						text += data.name + " - "+ timestamp +"\n"
+					}
+					catch($err) {
+						text += data.name + " - "+ "null" +"\n"
+					}
+
+
+				}
+
+			await client.sendMessage(process.env.MY_NUMBER, text)
+
+		}
+
+	async getTime(phone)
+		{
+			const number 		= await client.getNumberId(phone)
+			const chat		 	= await client.getChatById(number._serialized)
+
+
+			const message = await chat.fetchMessages({ //query message
+				limit : 1,
+				fromMe : false
+			})
+
+
+			if(message.length == 0)
+				{
+					return "empty"
+				}
+			else
+				{
+
+					const lastMessage 	= new Date( (message[0]["timestamp"] * 1000) )
+					const day = lastMessage.getDate().toString().padStart(2,"0")
+					const month = (lastMessage.getMonth() +1).toString().padStart(2, "0");
+
+					return `${day}/${month} [${lastMessage.getHours()}:${lastMessage.getMinutes()}]`
+				}
+
+
+
+
+
+
+
+		}
+
+
+
 	async sendMessage(to)
 		{
 
 
 			const message = this.formatMessage()
-
 			const number = await client.getNumberId(to)
 
-			if(message != undefined || message != null)
+			if(message.includes(undefined) == false || message.includes(null) == false)
 				{
 					try {
 						// console.log(message);
 						await client.sendMessage( number._serialized, message  )
+						// console.log("OK");
 					}
 					catch(err) {
 						console.log("erro para " + to + " : ", err)
@@ -81,7 +140,7 @@ export class Cron
 
 				}
 			else {
-				await client.sendMessage("558592967482@c.us", "Pão Diário não enviado para : "+to)
+				await client.sendMessage(process.env.MY_NUMBER, "Pão Diário não enviado para : "+to)
 			}
 
 

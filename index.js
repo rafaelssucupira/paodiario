@@ -12,7 +12,7 @@ client.on('authentication', () => {
 });
 
 client.on('ready', () => {
-	console.log("ready version 1.1");
+	console.log("ready version 1.2");
 
 	const cron = new Cron()
 	cron.start();
