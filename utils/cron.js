@@ -1,7 +1,7 @@
 import { CronJob } from "cron";
 import { DailyBread } from "daily-bread"
 import { client } from "./client.js";
-import contactsWhatsapp from "./contacts.js";
+import { contactsWhatsapp } from "./contacts.js";
 import { postData } from "./postData.js";
 
 import 'dotenv/config'
@@ -31,26 +31,6 @@ export class Cron
 				console.log($err);
 			}
 
-
-
-		}
-
-	async start()
-		{
-
-			const currentClass = this;
-
-			const cron = new CronJob( "0 30 5 * * *" ,	async function()
-				{
-					await currentClass.getMessage(); //CAPTURAR MENSAGEM DO DIA
-					for(const data of contactsWhatsapp)
-						{
-							currentClass.sendMessage(data.phone)
-
-						}
-
-					currentClass.sendReportLastMessage()
-				}, null, true, "America/Sao_Paulo")
 
 
 		}
@@ -110,10 +90,39 @@ export class Cron
 					return `${day}/${month} [${lastMessage.getHours()}:${lastMessage.getMinutes()}]`
 				}
 
+		}
+
+
+	delay(miliseconds)
+		{
+			return new Promise(function(resolve) {
+				setTimeout(function(){
+					resolve();
+				}, miliseconds)
+			})
+
+		}
 
 
 
+	async start()
+		{
 
+			const currentClass = this;
+
+			const cron = new CronJob( "0 0 7 * * *" ,	async function()
+				{
+					await currentClass.getMessage(); //CAPTURAR MENSAGEM DO DIA
+					for(const data of contactsWhatsapp)
+						{
+
+							await this.delay(15000);
+							currentClass.sendMessage(data.phone)
+
+						}
+
+					currentClass.sendReportLastMessage()
+				}, null, true, "America/Sao_Paulo")
 
 
 		}
@@ -122,27 +131,24 @@ export class Cron
 
 	async sendMessage(to)
 		{
-
-
 			const message = this.formatMessage()
-			const number = await client.getNumberId(to)
+			const chat = await client.getChatById(to + "@c.us")
+
+
 
 			if(message.includes(undefined) == false || message.includes(null) == false)
 				{
 					try {
-						// console.log(message);
-						await client.sendMessage( number._serialized, message  )
-						// console.log("OK");
+
+						await chat.sendStateTyping() //produz 25 segundos de delay
+						await client.sendMessage( chat.to, message  )
 					}
 					catch(err) {
 						console.log("erro para " + to + " : ", err)
+						await client.sendMessage(process.env.MY_NUMBER, "Pão Diário não enviado para : "+to)
 					}
 
 				}
-			else {
-				await client.sendMessage(process.env.MY_NUMBER, "Pão Diário não enviado para : "+to)
-			}
-
 
 		}
 

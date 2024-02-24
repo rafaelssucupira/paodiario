@@ -3,6 +3,7 @@ import qrcode from "qrcode-terminal";
 import { client } from "./utils/client.js";
 import { Cron } from "./utils/cron.js";
 
+
 client.on('qr', (qr) => {
     qrcode.generate(qr, { small: true });
 });
