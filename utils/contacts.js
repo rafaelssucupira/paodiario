@@ -1,5 +1,5 @@
 const contactsWhatsapp = [
-    // { "phone" : "558591100290", "name" : "Gabriel" },
+    { "phone" : "558591100290", "name" : "Gabriel" },
     { "phone" : "558594230992", "name" : "Lu" },
     { "phone" : "558591676972", "name" : "Dudu" },
     { "phone" : "558591266320", "name" : "Tia" }, //Evilene
@@ -7,14 +7,12 @@ const contactsWhatsapp = [
     { "phone" : "558591348366", "name" : "Mãe" },
     { "phone" : "558592886655", "name" : "Renan" },
     { "phone" : "558594177246", "name" : "Eliza" },
-	// { "phone" : "558585184509", "name" : "Davi" },
 	{ "phone" : "558587173774", "name" : "José" }, //marvem
 	{ "phone" : "558591148425", "name" : "Valdones" },
 	{ "phone" : "558581197064", "name" : "Coelho" },
 	{ "phone" : "558594035415", "name" : "Bruna" },
 	{ "phone" : "558592778401", "name" : "Miguel" },
 	{ "phone" : "558594392255", "name" : "Juliene" },
-	{ "phone" : "558584590953", "name" : "Jessica" },
 	{ "phone" : "558592911138", "name" : "Irmã Mariinha" },
 	{ "phone" : "558592638412", "name" : "Marinete" },
 	{ "phone" : "558592692053", "name" : "Rosilene" },
@@ -37,7 +35,11 @@ const contactsWhatsapp = [
 	{ "phone" : "558586378939", "name" : "Irmã Hosana" },
 	{ "phone" : "558591201981", "name" : "Milton" },
 	{ "phone" : "558592536404", "name" : "Pr. Cesar" },
-	{ "phone" : "558591181125", "name" : "Lorão" }
+	{ "phone" : "558591181125", "name" : "Lorão" },
+	{ "phone" : "558592661183", "name" : "Priscila" },
+	{ "phone" : "558591707839", "name" : "Leticia" },
+	{ "phone" : "558591082507", "name" : "Irma Angelica" },
+	{ "phone" : "558592861895", "name" : "Andressa" }
 
 ]
 

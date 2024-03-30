@@ -1,9 +1,12 @@
 import pkg from "whatsapp-web.js"
-const { Client, LocalAuth } = pkg
+const { Client, LocalAuth, MessageMedia } = pkg
 
-export const client = new Client({
+const client = new Client({
 	authStrategy: new LocalAuth()
 })
 
-
+export {
+	client,
+	MessageMedia
+}
 
