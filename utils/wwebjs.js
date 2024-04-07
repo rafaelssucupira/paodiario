@@ -3,6 +3,12 @@ import {client, MessageMedia} from "./client.js"
 
 export class wwebjs {
 
+	async getVersion()
+		{
+			const version = await client.getWWebVersion();
+			console.log("Whatsapp-web version : "+version);
+		}
+
 	async getChatById(to)
 		{
 			return await client.getChatById(to + "@c.us")
@@ -36,6 +42,7 @@ export class wwebjs {
 						}
 
 					const number = await this.getNumberID(to)
+					console.log("number", number);
 					return await client.sendMessage( number._serialized , body);
 				}
 			catch(err) {

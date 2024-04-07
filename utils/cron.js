@@ -6,13 +6,14 @@ import 'dotenv/config'
 import { SQL } from "./SQL.js";
 import { schemaVer } from "./schemas/ver.js";
 
-class Cron
+class Cron extends wwebjs
 {
 
 	#message="";
 
 	constructor() {
-		// super()
+		super()
+		this.getVersion();
 	}
 
 	async getMessage()
@@ -58,6 +59,7 @@ class Cron
 
 	async start()
 		{
+			console.log(process.env.AMBIENTE)
 			if(process.env.AMBIENTE == "production")
 				{
 					const Cron = new CronJob( "0 0 7 * * *" , async () =>
