@@ -59,7 +59,7 @@ class Cron extends wwebjs
 
 	async start()
 		{
-			console.log(process.env.AMBIENTE)
+
 			if(process.env.AMBIENTE == "production")
 				{
 					const Cron = new CronJob( "0 0 7 * * *" , async () =>
