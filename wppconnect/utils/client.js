@@ -12,7 +12,7 @@ const client = await create({
     session : "bible",
     disableWelcome : true,
 	debug: false,
-    phoneNumber : process.env.NUMBER_CONNECT,
+    phoneNumber : process.env.MY_NUMBER,
     statusFind : (sts, session) => {
         console.log("sts :", sts);
         console.log("sts :", session);

@@ -1,14 +1,18 @@
 import { Sequelize } from "sequelize";
 
 export class SQL {
-    constructor($db, $user, $passwd) {
+    constructor($host, $db, $user, $passwd) {
         this.conn = new Sequelize($db, $user, $passwd, {
-            host: "108.179.241.242",
+            host: $host ,
             dialect: "mysql",
+            dialectOptions : {
+                dateStrings : true, //hack
+                typeCast: true //hack
+            },
+            logging: false,
             define : {
                 timestamps: false,
-                freezeTableName: true,
-
+                freezeTableName: true
             }
         })
 
@@ -19,11 +23,11 @@ export class SQL {
             await this.conn.authenticate();
             return true;
         } catch (error) {
-            return error;
+            new Error("Não conectado : " +  error);
         }
     }
-    async rawQuery( sql ) {
-        return await this.conn.query(sql)
+    async rawQuery( sql, opts ) {
+        return await this.conn.query(sql, opts)
     }
 
     async defineModel( model, dataTypes ) {
@@ -35,7 +39,6 @@ export class SQL {
     }
 
     async insert(model, data) {
-        console.log("data", data);
         return await model.create(data)
     }
 
@@ -45,6 +48,16 @@ export class SQL {
 
     async delete(model, where) {
         return await model.destroy(where)
+    }
+
+    replaceParams( query, params )  {
+        let queryString = query
+        for(const data of params)
+            {
+                queryString = queryString.replace( data.key, data.value );
+            }
+
+        return queryString
     }
 
 

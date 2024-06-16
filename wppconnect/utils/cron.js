@@ -38,7 +38,7 @@ class Cron
 	async syncDb(reference, text)
 		{
 
-			const conn = new SQL("rastza11_paodiario", "rastza11_root", "durango2018");
+			const conn = new SQL(process.env.BANCO_IP, process.env.BANCO_ADMIN, process.env.BANCO_USER, process.env.BANCO_PASSWD);
 			const isConnected = await conn.isConnected()
 			if(isConnected) {
 				try {
@@ -60,7 +60,7 @@ class Cron
 	async start()
 		{
 
-			if(process.env.AMBIENTE == "production")
+			if(process.env.AMBIENTE == "prod")
 				{
 					new CronJob( "0 0 7 * * *" , async () =>
 						{
