@@ -1,10 +1,8 @@
 import { CronJob } from "cron";
 import { DailyBread } from "daily-bread"
-import { contactsWhatsapp } from "./contacts.js";
+import contacts from "./data/contacts.json" assert { type: 'json' }
 import { wwebjs } from "./wwebjs.js";
 import 'dotenv/config'
-import { SQL } from "./SQL.js";
-import { schemaVer } from "./schemas/ver.js";
 
 class Cron extends wwebjs
 {
@@ -24,37 +22,14 @@ class Cron extends wwebjs
 
 				const { reference, text } = await bible.votd()
 
-				await this.syncDb( reference, text );
-
 				const txtFormatted = `*🍞 Pão Diário*\n\n${text}\n\n*${reference}*`
 				this.#message = txtFormatted
 
 			}
 			catch($err) {
-				console.log("[getMessage]", $err);
+				throw new Error($err);
 			}
 
-		}
-	async syncDb(reference, text)
-		{
-
-			const conn = new SQL("rastza11_paodiario", "rastza11_root", "durango2018");
-			const isConnected = await conn.isConnected()
-			if(isConnected) {
-				try {
-					const modelVer 	= await conn.defineModel("ver", schemaVer)
-					const result 	= await conn.insert( modelVer, { ver_referencia: reference, ver_texto: text } )
-					console.log("syncDb : OK");
-				}
-				catch($err) {
-					console.log("[syncDb]", $err);
-					await this.sendMessage(process.env.MY_NUMBER, "❌ paodiario : Erro ao inserir no banco de dados" );
-					await this.chatUnread( process.env.MY_NUMBER );
-
-				}
-
-
-			}
 		}
 
 	async start()
@@ -66,7 +41,7 @@ class Cron extends wwebjs
 						{
 							await this.getMessage();
 
-							for(const data of contactsWhatsapp)
+							for(const data of contacts)
 								{
 									await this.sendMessage(data.phone, this.#message )
 								}

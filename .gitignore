@@ -6,3 +6,4 @@ package-lock.json
 .env
 tokens
 auth_info_baileys
+contacts.json

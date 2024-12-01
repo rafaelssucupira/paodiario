@@ -18,6 +18,15 @@ client.on('ready', async () => {
 
 });
 
+client.on('message', async (msg) => {
+
+	console.log(
+		msg
+	)
+
+
+})
+
 client.initialize();
 
 

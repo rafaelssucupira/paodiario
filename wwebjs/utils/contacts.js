@@ -23,9 +23,7 @@ const contactsWhatsapp = [
 	{ "phone" : "558581613623", "name" : "Aglailson" },
 	{ "phone" : "558592381866", "name" : "Luiz Carlos" },
 	{ "phone" : "558581496628", "name" : "Irmao Naldo" },
-	{ "phone" : "558581745199", "name" : "Pr.Renato" },
 	{ "phone" : "558585508876", "name" : "Vó" }, //Isinha
-    { "phone" : "558596293786", "name" : "Joao Victor" },
 	{ "phone" : "558585865781", "name" : "Belly" }, //isabelly
 	{ "phone" : "558594083900", "name" : "Leandro" },
 	{ "phone" : "558592727083", "name" : "Angelica" },
@@ -40,7 +38,6 @@ const contactsWhatsapp = [
 	{ "phone" : "558591707839", "name" : "Leticia" },
 	{ "phone" : "558591082507", "name" : "Irma Angelica" },
 	{ "phone" : "558592861895", "name" : "Andressa" },
-	{ "phone" : "558589689513", "name" : "Ze Paulo" },
 	{ "phone" : "558592858373", "name" : "Kauan" },
 	{ "phone" : "558588216436", "name" : "Vo lucinda" }
 

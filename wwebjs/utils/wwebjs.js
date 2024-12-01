@@ -42,7 +42,6 @@ export class wwebjs {
 						}
 
 					const number = await this.getNumberID(to)
-					console.log("number", number);
 					return await client.sendMessage( number._serialized , body);
 				}
 			catch(err) {
