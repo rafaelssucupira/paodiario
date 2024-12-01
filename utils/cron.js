@@ -1,6 +1,6 @@
 import { CronJob } from "cron";
 import { DailyBread } from "daily-bread"
-import contacts from "./data/contacts.json" assert { type: 'json' }
+import contacts from "./../contacts.json" assert { type: 'json' }
 import { wwebjs } from "./wwebjs.js";
 import 'dotenv/config'
 
@@ -35,27 +35,16 @@ class Cron extends wwebjs
 	async start()
 		{
 
-			if(process.env.AMBIENTE == "production")
-				{
-					const Cron = new CronJob( "0 0 7 * * *" , async () =>
-						{
-							await this.getMessage();
-
-							for(const data of contacts)
-								{
-									await this.sendMessage(data.phone, this.#message )
-								}
-
-						}, null, true, "America/Sao_Paulo")
-				}
-			else
+			const Cron = new CronJob( "0 0 7 * * *" , async () =>
 				{
 					await this.getMessage();
-					await this.sendMessage("558591100290", this.#message )
 
-				}
+					for(const data of contacts)
+						{
+							await this.sendMessage(data.phone, this.#message )
+						}
 
-
+				}, null, true, "America/Sao_Paulo")
 
 		}
 
