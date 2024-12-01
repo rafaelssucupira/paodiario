@@ -22,7 +22,7 @@ git clone https://github.com/rafaelssucupira/bible.git
 Instale as dependências:
 `npm install`
 
-Criar arquivo `contacts.json` seguindo o seguinte modelo :
+Criar arquivo `contacts.json`na raiz do projeto, seguindo o seguinte modelo :
 ```
 [
 	{ "phone" : "5585xxxx-xxxx", "name" : "xxx" },
