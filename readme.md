@@ -14,13 +14,15 @@ Este é um bot para WhatsApp desenvolvido para enviar versículos da Bíblia aut
 
 ## Instalação
 Clone o repositório:
+```
 git clone https://github.com/rafaelssucupira/bible.git
+```
 
 
 Instale as dependências:
-npm install
+`npm install`
 
-Criar arquivo contacts.json seguindo o seguinte modelo :
+Criar arquivo `contacts.json` seguindo o seguinte modelo :
 ```
 [
 	{ "phone" : "5585xxxx-xxxx", "name" : "xxx" },
@@ -29,4 +31,4 @@ Criar arquivo contacts.json seguindo o seguinte modelo :
 ```
 
 Inicie o bot:
-npm start
+`npm start`
