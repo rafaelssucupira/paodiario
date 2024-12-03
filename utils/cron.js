@@ -11,7 +11,6 @@ class Cron extends wwebjs
 
 	constructor() {
 		super()
-		this.getVersion();
 	}
 
 	async getMessage()
@@ -32,20 +31,29 @@ class Cron extends wwebjs
 
 		}
 
+	stopApp()
+		{
+			pm2.list( function(err, list) {
+				for(const data of list)
+				{
+					if(data.name === "@paodiario")
+						{
+							pm2.delete(data.name, (err, proc) => {
+								if(err) console.log(err);
+								console.log(proc[0]["name"] + " - status : " + proc[0]["status"])
+							})
+						}
+				}
+			})
+		}
+
 	async start()
 		{
-
-			const Cron = new CronJob( "0 0 7 * * *" , async () =>
+			await this.getMessage();
+			for(const data of contacts)
 				{
-					await this.getMessage();
-
-					for(const data of contacts)
-						{
-							await this.sendMessage(data.phone, this.#message )
-						}
-
-				}, null, true, "America/Sao_Paulo")
-
+					await this.sendMessage(data.phone, this.#message )
+				}
 		}
 
 
