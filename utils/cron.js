@@ -1,8 +1,8 @@
-import { CronJob } from "cron";
+
+import { client } from "./client.js";
 import { DailyBread } from "daily-bread"
-import contacts from "./../contacts.json" assert { type: 'json' }
 import { wwebjs } from "./wwebjs.js";
-import 'dotenv/config'
+import pm2 from "pm2";
 
 class Cron extends wwebjs
 {
@@ -31,14 +31,26 @@ class Cron extends wwebjs
 
 		}
 
+	async getContacts()
+		{
+
+			const allContacts 	= await client.getContacts();
+			return allContacts
+				.filter(contact => contact.name && contact.name.includes("@paodiario") && contact.id.server === "c.us")
+				.map(contact => ({name : contact.name, number : contact.number}) );
+
+
+
+		}
+
 	stopApp()
 		{
 			pm2.list( function(err, list) {
 				for(const data of list)
 				{
-					if(data.name === "@paodiario")
+					if(data.name === "paodiario")
 						{
-							pm2.delete(data.name, (err, proc) => {
+							pm2.stop(data.name, (err, proc) => {
 								if(err) console.log(err);
 								console.log(proc[0]["name"] + " - status : " + proc[0]["status"])
 							})
@@ -47,13 +59,17 @@ class Cron extends wwebjs
 			})
 		}
 
-	async start()
+	async start(contacts)
 		{
 			await this.getMessage();
+			console.log(this.#message )
 			for(const data of contacts)
 				{
-					await this.sendMessage(data.phone, this.#message )
+					console.log( data.phone )
+					// await this.sendMessage(data.phone, this.#message )
 				}
+
+
 		}
 
 

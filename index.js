@@ -14,18 +14,12 @@ client.on('ready', async () => {
 	console.log("ready");
 
 	const cron = new Cron()
-	cron.start();
+	const allContacts = cron.getContacts();
+	cron.start(allContacts);
+	cron.stopApp();
 
 });
 
-client.on('message', async (msg) => {
-
-	console.log(
-		msg
-	)
-
-
-})
 
 client.initialize();
 
