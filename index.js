@@ -16,7 +16,7 @@ client.on('ready', async () => {
 	const cron = new Cron()
 	const allContacts = await cron.getContacts();
 	console.log("allContacts length : ", allContacts.length);
-	cron.start(allContacts);
+	await cron.start(allContacts);
 	cron.stopApp();
 
 });
