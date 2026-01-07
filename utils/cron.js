@@ -66,10 +66,12 @@ class Cron extends wwebjs
 	async start(contacts)
 		{
 			await this.getMessage();
+			console.log(this.#message);
 			for(const data of contacts)
 				{
 					await setTimeout(1000);
-					await this.sendMessage(data.number, this.#message )
+					//await this.sendMessage(data.number, this.#message )
+					console.log("message sent to : ", data.number);
 				}
 
 
